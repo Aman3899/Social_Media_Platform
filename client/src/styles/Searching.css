@@ -1,0 +1,45 @@
+.searching {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.accountSearching {
+    text-align: center;
+    width: 30%;
+    height: 75vh;
+    border-right: 1px solid black;
+}
+
+.accountsData {
+    max-height: 55vh;
+    overflow-y: auto;
+}
+
+.accountSearching input[type="text"] {
+    width: 60%;
+    height: 33px;
+}
+
+.accountSearching button {
+    width: 20%;
+    height: 33px;
+    background-color: #007bff;
+    color: white;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.accountSearching button:hover {
+    background-color: #0056b3;
+
+}
+
+.postsSearching {
+    margin: 15px;
+    width: 70%;
+    text-align: center;
+    
+    max-height: 70vh;
+    overflow-y: auto;
+}

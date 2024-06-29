@@ -1,0 +1,23 @@
+#loginForm {
+    width: 65%;
+    margin-left: 34%;
+    margin-right: 34%;
+    text-align: center;
+    padding: 20px;
+    margin-top: 2%;
+}
+
+h1 {
+    font-weight:750;
+    font-size: 50px;
+    text-decoration: underline;
+    color: black;
+}
+
+@media only screen and (min-width: 300px) and (max-width: 995px) {
+    #loginForm {
+        width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+  }

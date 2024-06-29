@@ -1,0 +1,21 @@
+#myFooter {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+#myFooter a {
+    padding: 10px;
+    color: aliceblue;
+}
+
+#myFooter a i {
+    font-size: 20px;
+}
