@@ -10,7 +10,7 @@ import Notfound from './components/nofound.jsx';
 import ProtectedRoute from './routehandling/protectedroute.jsx';
 import { AuthProvider } from "./auth/authcontext.jsx";
 import SwitchRoute from './routehandling/switchroute.js';
-const isAuthenticated = true;
+const isAuthenticated = localStorage.getItem('isAuthenticated') === 'True';
 
 
 function App() {
@@ -19,9 +19,20 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-        <Route path="/" element={<ProtectedRoute elementIfAuthenticated={<Home />} isAuthenticated={isAuthenticated}/>}  />
-        <Route path="/createPost" element={<ProtectedRoute elementIfAuthenticated={<CreatePost />} isAuthenticated={isAuthenticated}/>}  />
-          <Route path="/home" element={<Home/>} />
+
+        <Route
+            path="/home"
+            element={
+              <SwitchRoute
+                elementIfAuthenticated={<Home />} 
+                elementIfNotAuthenticated={<Login />} 
+                isAuthenticated={isAuthenticated}
+              />
+            }
+          />
+          <Route path="/" element={<ProtectedRoute elementIfAuthenticated={<Home />} isAuthenticated={isAuthenticated}/>}  />
+          <Route path="/createPost" element={<ProtectedRoute elementIfAuthenticated={<CreatePost />} isAuthenticated={isAuthenticated}/>}  />
+          
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<Notfound />} />
