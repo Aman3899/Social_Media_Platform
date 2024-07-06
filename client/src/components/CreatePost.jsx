@@ -1,76 +1,90 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/CreatePost.css";
+import {jwtDecode} from "jwt-decode";  // Fixed import statement
 
 const CreatePost = () => {
-    const fileInputRef = useRef(null);
-    const [selFilename, setSelFilename] = useState("");
-    const navigate = useNavigate();
-    const [modalOpen, setModalOpen] = useState(false);
-    const modalRef = useRef(null);
-    const btnRef = useRef(null);
-    const closeRef = useRef(null);
+  const fileInputRef = useRef(null);
+  const [selFilename, setSelFilename] = useState("");
+  const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
+  const modalRef = useRef(null);
+  const btnRef = useRef(null);
+  const closeRef = useRef(null);
 
-    const handleDragOver = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        e.dataTransfer.dropEffect = 'copy';
-    };
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.dataTransfer.dropEffect = 'copy';
+  };
 
-    const handleDrop = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-            fileInputRef.current.files = e.dataTransfer.files;
-            fileInputRef.current.dispatchEvent(new Event('change', { bubbles: true }));
-            e.dataTransfer.clearData();
-        }
-    };
-
-    const handleFilename = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setSelFilename(file.name);
-        }
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      fileInputRef.current.files = e.dataTransfer.files;
+      fileInputRef.current.dispatchEvent(new Event('change', { bubbles: true }));
+      e.dataTransfer.clearData();
     }
+  };
 
-    const handleOpenModal = () => {
-        setModalOpen(true);
-    };
+  const handleFilename = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelFilename(file.name);
+    }
+  }
 
-    const handleCloseModal = () => {
-        setModalOpen(false);
-    };
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
 
-    const sharePost = async () => {
-        const file = fileInputRef.current.files[0];
-        if (file) {
-            const data = new FormData();
-            data.append('file', file);
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const sharePost = async () => {
+    const file = fileInputRef.current.files[0];
+    const data = new FormData();
+    const token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.iat;
+    const username = decodedToken.username;
     
-            try {
-                const response = await fetch("http://localhost:3000/post", {
-                    method: "POST",
-                    body: data
-                });
-                
-                if (response.ok) {
-                    handleOpenModal();
-                    setTimeout(() => {
-                        navigate("/home");
-                    }, 2000);
-                } else {
-                    console.error("Failed to upload file:", response.statusText);
-                }
-            } catch (error) {
-                console.error("Error uploading file:", error);
-            }
+    data.append('file', file);
+    data.append('userId', userId);
+    data.append('username', username);
+  
+    if (file) {
+      try {
+        const response = await fetch("http://localhost:3001/post", {
+          method: "POST",
+          body: data,
+          headers: {
+            'Authorization': `Bearer ${token}`
+            // Ensure to set Content-Type header
+          },
+        });
+  
+        if (response.ok) {
+          handleOpenModal();
+          setTimeout(() => {
+            navigate("/home");
+          }, 2000);
         } else {
-            alert("No file selected");
+          console.error("Failed to upload file:", response.statusText);
         }
-    };
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
+    } else {
+      alert("No file selected");
+    }
+  };
+  
 
     return (
+       
         <div className="postDiv">
             <h2 className="heading2" style={{ fontWeight: "bold", fontSize: "40px", textDecoration: "underline" }}>Create new Post</h2>
             <hr />
