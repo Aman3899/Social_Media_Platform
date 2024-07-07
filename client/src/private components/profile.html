@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="profile">
+            <div class="profile-image">
+                <img src="https://via.placeholder.com/150" alt="Profile Image" id="profileImage">
+            </div>
+            <h1 class="username" id="usernameDisplay">username</h1>
+            <p class="bio" id="bioDisplay">Your bio here...</p>
+            <div class="stats">
+                <span>0 posts</span>
+                <span>0 followers</span>
+                <span>0 following</span>
+            </div>
+            <div class="actions">
+                <!-- Changed button to a link for editing profile -->
+                <a href="editprofile.html" class="button">Edit Profile</a>
+                <button onclick="shareProfile()">Share profile</button>
+            </div>
+            <div class="nav-bar">
+                <button onclick="openGrid()" class="nav-button"><i class="fa fa-th"></i></button>
+                <button onclick="openVideo()" class="nav-button"><i class="fa fa-video"></i></button>
+                <button onclick="openCamera()" class="nav-button"><i class="fa fa-camera"></i></button>
+            </div>
+        </div>
+    </div>
+    <button class="new-post-btn" onclick="addNewPost()">New Post</button>
+
+    <div class="bottom-nav">
+        <button id="homeBtn" onclick="goHome()" class="nav-icon active"><i class="fa fa-home"></i></button>
+        <button id="searchBtn" onclick="search()" class="nav-icon"><i class="fa fa-search"></i></button>
+        <button id="videoBtn" onclick="showVideos()" class="nav-icon"><i class="fa fa-film"></i></button>
+        <button id="settingsBtn" onclick="showSettings()" class="nav-icon"><i class="fa fa-cog"></i></button>
+    </div>
+    
+    
+
+    <script src="profile.js"></script>
+</body>
+</html>

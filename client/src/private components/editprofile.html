@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <div class="edit-profile-container">
+        <h1>Edit Profile</h1>
+        <form id="editProfileForm">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username">
+
+            <label for="bio">Bio</label>
+            <textarea id="bio" name="bio"></textarea>
+
+            <label for="profileImage">Profile Image URL</label>
+            <input type="text" id="profileImageURL" name="profileImageURL">
+
+            <!-- Add additional fields as necessary -->
+
+            <button type="button" onclick="saveProfile()">Save</button>
+        </form>
+    </div>
+
+    <script src="editprofile.js"></script>
+</body>
+</html>
