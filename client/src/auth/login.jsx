@@ -5,10 +5,12 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
+  console.log(username);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('https://social-media-platform-api-beta.vercel.app/login', {
+      const response = await fetch('http://localhost:3001/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -22,7 +24,7 @@ const LoginForm = () => {
         localStorage.setItem('token', data.accessToken);
         localStorage.setItem('isAuthenticated', "True");
        
-      window.location.href = '/';
+        window.location.href = `/home?username=${username}`;
       } else {
         setError('Login failed. Please check your credentials.');
       }

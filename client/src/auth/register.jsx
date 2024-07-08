@@ -10,7 +10,7 @@ function Register() {
     event.preventDefault();
     const userData = { username, password };
 
-    fetch("https://social-media-platform-api-beta.vercel.app/register", {
+    fetch("http://localhost:3001/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

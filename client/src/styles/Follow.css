@@ -1,0 +1,72 @@
+.Follow{
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.UserInfo{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    padding: 3rem;
+    font-size: 20px;
+}
+
+.Followers{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.Following{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.Suggestions{
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    font-weight: 500;
+    gap: 2rem;
+    overflow: scroll;
+}
+
+h3{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+li{
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+}
+
+.suggest{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-left: 2rem;
+}
+
+.button{
+    background-color: blue;
+    padding: 5px;
+    margin-left: auto;
+    border: 1px solid blue;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.button:hover{
+    background-color: white;
+    color: blue;
+}

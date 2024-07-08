@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const fs = require("fs");
 
 const multer = require("multer");
+const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const { createTokens, validateToken } = require("./JWT.js");
 const port = 3001;
@@ -19,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(cookieParser());
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = process.env.MONGODB_URL;
 
 const client = new MongoClient(uri, {
@@ -27,6 +28,7 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
+    erverSelectionTimeoutMS: 30000
   },
 });
 
@@ -34,6 +36,127 @@ const db = client.db();
 
 
 var emailOrUsername = "";
+
+app.post('/getFollowersCount', async (req, res) => {
+  const { username } = req.body;
+
+  if (!username) {
+    return res.status(400).json({ error: 'Username is required' });
+  }
+
+  try {
+    const user = await db.collection('users').findOne({ username: username });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const followersCount = user.followers.length;
+    res.status(200).json({ followersCount });
+  } catch (error) {
+    console.error('Error getting followers count:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/getFollowingCount', async (req, res) => {
+  const { username } = req.body;
+
+  if (!username) {
+    return res.status(400).json({ error: 'Username is required' });
+  }
+
+  try {
+    const user = await db.collection('users').findOne({ username: username });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const followingCount = user.following.length;
+    res.status(200).json({ followingCount });
+  } catch (error) {
+    console.error('Error getting following count:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
+
+
+
+app.post('/isFollower', async (req, res) => {
+  const { userIds, username } = req.body;
+
+  if (!userIds || !username) {
+    return res.status(400).json({ error: 'userIds and currentUsername are required' });
+  }
+
+  try {
+    const currentUser = await db.collection('users').findOne({ username: username });
+    if (!currentUser) {
+      return res.status(404).json({ error: 'Current user not found' });
+    }
+
+    const followStatus = userIds.map(userId => currentUser.following.includes(userId));
+
+    res.status(200).json({ followStatus });
+  } catch (error) {
+    console.error('Error checking follow status:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
+
+
+app.post('/followUser', async (req, res) => {
+  const { userId, username } = req.body;
+
+  console.log(username, userId);
+
+  if (!userId || !username) {
+    return res.status(400).json({ error: 'userId and currentUsername are required' });
+  }
+
+  try {
+    const currentUser = await db.collection('users').findOne({ username });
+    if (!currentUser) {
+      return res.status(404).json({ error: 'Current user not found' });
+    }
+
+    const userToFollow = await db.collection('users').findOne({ _id: new ObjectId(userId) });
+    if (!userToFollow) {
+      return res.status(404).json({ error: 'User to follow not found' });
+    }
+
+    if (currentUser.following && currentUser.following.includes(userId)) {
+      return res.status(400).json({ error: 'Already following this user' });
+    }
+
+    const updatedFollowing = [...(currentUser.following || []), userId];
+    await db.collection('users').updateOne(
+      { username },
+      { $set: { following: updatedFollowing } }
+    );
+
+    res.status(200).json(updatedFollowing);
+  } catch (error) {
+    console.error('Error following user:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+app.get('/getAllUsers', async (req, res) => {
+  try {
+    const users = await db.collection('users').find().toArray();
+    res.send(users);
+  } catch (error) {
+    res.status(500).send({ error: 'Failed to fetch users' });
+  }
+});
+
 
 app.get( "/searchAccounts", async (req, res) => {
 
@@ -129,9 +252,10 @@ app.get("/", (req, res) => {
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
   try {
+    const hash = await bcrypt.hash(password, 10);
     const user = {
       username: username,
-      password: password,
+      password: hash,
     };
     const usersCollection = db.collection("users");
     await usersCollection.insertOne(user);
@@ -163,7 +287,8 @@ app.post("/login", async (req, res) => {
     });
 
     const dbPassword = user.password;
-    if (!dbPassword) {
+    const match = await bcrypt.compare(password, dbPassword);
+    if (!match) {
       return res
         .status(400)
         .json({ error: "Wrong Username and Password Combination!" });

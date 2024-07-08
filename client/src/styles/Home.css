@@ -1,3 +1,9 @@
+.Home{
+  display: flex;
+  flex-direction: row;
+}
+
+
 .homeFeed {
     max-height: 75vh;
     overflow-y: auto;
@@ -38,4 +44,19 @@
   
   .likes:hover, .comments:hover {
     color: #333;
+  }
+
+  .Footer{
+    margin-bottom: 0px;
+    position: relative;
+  }
+
+  .Home{
+    margin-bottom: 100px;
+  }
+
+  .HomeParent{
+    display: flex;
+    flex-direction: column;
+    position: relative;
   }

@@ -13,6 +13,7 @@ import SwitchRoute from './routehandling/switchroute.js';
 import MainNavbar from "./components/MainNavbar.jsx";
 import ManageAccount from "./components/ManageAccounts.jsx";
 import InitialNavbar from "./components/InitialNavbar.jsx";
+import Footer from "./components/Footer.jsx";
 const isAuthenticated = localStorage.getItem('isAuthenticated') === 'True';
 
 
