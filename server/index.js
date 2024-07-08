@@ -5,7 +5,6 @@ const dotenv = require("dotenv");
 const fs = require("fs");
 
 const multer = require("multer");
-const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
 const { createTokens, validateToken } = require("./JWT.js");
 const port = 3001;
@@ -130,10 +129,9 @@ app.get("/", (req, res) => {
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
   try {
-    const hash = await bcrypt.hash(password, 10);
     const user = {
       username: username,
-      password: hash,
+      password: password,
     };
     const usersCollection = db.collection("users");
     await usersCollection.insertOne(user);
@@ -165,8 +163,7 @@ app.post("/login", async (req, res) => {
     });
 
     const dbPassword = user.password;
-    const match = await bcrypt.compare(password, dbPassword);
-    if (!match) {
+    if (!dbPassword) {
       return res
         .status(400)
         .json({ error: "Wrong Username and Password Combination!" });
