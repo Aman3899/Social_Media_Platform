@@ -10,7 +10,9 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "postinstall": "chmod +x ./node_modules/.bin/vite"
+    "postinstall": "chmod +x ./node_modules/.bin/vite",
+    "predeploy": "npm run build",    
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
