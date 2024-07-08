@@ -13,7 +13,7 @@ const Searching = () => {
     
     const handleAccountSearching = async (data) => {
 
-        const response = await fetch(`http://localhost:3000/searchAccounts?username=${data.search}`, { method: "GET" });
+        const response = await fetch(`https://social-media-platform-api-beta.vercel.app/searchAccounts?username=${data.search}`, { method: "GET" });
         const resJSON = await response.json();
 
         setUsersAccount(resJSON);
@@ -24,7 +24,7 @@ const Searching = () => {
         setUsernameView(username);
         setUserPosts([]);
 
-        const response = await fetch(`http://localhost:3000/getUserPosts?username=${username}`, { method: "GET" });
+        const response = await fetch(`https://social-media-platform-api-beta.vercel.app/getUserPosts?username=${username}`, { method: "GET" });
         const resJSON = await response.json();
 
         setUserPosts(resJSON);

@@ -8,7 +8,7 @@ const Home = () => {
 
   const handlePosts = async () => {
     try {
-      const response = await fetch("http://localhost:3001/getPosts", { method: "GET" });
+      const response = await fetch("https://social-media-platform-api-beta.vercel.app/getPosts", { method: "GET" });
       if (response.ok) {
         const resJSON = await response.json();
         setUsersPost(resJSON);
@@ -26,7 +26,7 @@ const Home = () => {
 
   const handleLike = async (username) => {
     try {
-      const response = await fetch("http://localhost:3001/updateLikes", {
+      const response = await fetch("https://social-media-platform-api-beta.vercel.app/updateLikes", {
         method: "put",
         headers: {
           "Content-Type": "application/json"
