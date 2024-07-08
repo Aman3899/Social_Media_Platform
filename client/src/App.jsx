@@ -10,6 +10,10 @@ import Notfound from './components/nofound.jsx';
 import ProtectedRoute from './routehandling/protectedroute.jsx';
 import { AuthProvider } from "./auth/authcontext.jsx";
 import SwitchRoute from './routehandling/switchroute.js';
+import MainNavbar from "./components/MainNavbar.jsx";
+import ManageAccount from "./components/ManageAccounts.jsx";
+import InitialNavbar from "./components/InitialNavbar.jsx";
+import Footer from "./components/Footer.jsx";
 const isAuthenticated = localStorage.getItem('isAuthenticated') === 'True';
 
 
@@ -33,8 +37,11 @@ function App() {
           <Route path="/" element={<ProtectedRoute elementIfAuthenticated={<Home />} isAuthenticated={isAuthenticated}/>}  />
           <Route path="/createPost" element={<ProtectedRoute elementIfAuthenticated={<CreatePost />} isAuthenticated={isAuthenticated}/>}  />
           
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<> <InitialNavbar /> <Register /> </>} />
+          <Route path="/login" element={ <> <InitialNavbar /> <Login /> </>} />
+          <Route path="/search" element={<> <MainNavbar /> <Searching /> </>} />
+          <Route path="/manageAccount" element={<> <MainNavbar /> <ManageAccount /> </>} />
+          
           <Route path="*" element={<Notfound />} />
         </Routes>
       </BrowserRouter>

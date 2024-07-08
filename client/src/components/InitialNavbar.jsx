@@ -15,7 +15,7 @@ const Navbar = () => {
                 <li><Link to="https://aman-ullah.netlify.app/" target="_blank">Portfolio</Link></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
-                <li><Link to="/signup"><span className="glyphicon glyphicon-user"></span> Sign Up</Link></li>
+                <li><Link to="/register"><span className="glyphicon glyphicon-user"></span> Sign Up</Link></li>
                 <li><Link to="/"><span className="glyphicon glyphicon-log-in"></span> Login</Link></li>
             </ul>
         </div>

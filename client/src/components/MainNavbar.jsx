@@ -25,8 +25,8 @@ const MainNavbar = () => {
                 <li><Link to="/search">Search 🔎</Link></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
-                <li><Link to="/account"><span className="glyphicon glyphicon-user"></span>  Manage Account</Link></li>
-                <li><button onClick={handleSignOut}><span className="glyphicon glyphicon-log-in"></span>  Sign Out</button></li>
+                <li><Link to="/manageAccount"><span className="glyphicon glyphicon-user"></span>  Manage Account</Link></li>
+                <li style={{color: "grey", padding: "15px"}}><button onClick={handleSignOut}><span className="glyphicon glyphicon-log-in"></span>  Sign Out</button></li>
             </ul>
         </div>
       </nav>
