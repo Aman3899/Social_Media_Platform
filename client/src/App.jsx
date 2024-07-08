@@ -1,9 +1,8 @@
-
-import Home from "./components/Home";
-import CreatePost from './components/CreatePost';
-import Searching from './components/Searching';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './components/Home';
+import CreatePost from './components/CreatePost';
+import Searching from './components/Searching';
 import Login from './auth/login.jsx';
 import Register from './auth/register.jsx';
 import Notfound from './components/nofound.jsx';
@@ -14,17 +13,15 @@ import MainNavbar from "./components/MainNavbar.jsx";
 import ManageAccount from "./components/ManageAccounts.jsx";
 import InitialNavbar from "./components/InitialNavbar.jsx";
 import Footer from "./components/Footer.jsx";
+
 const isAuthenticated = localStorage.getItem('isAuthenticated') === 'True';
 
-
 function App() {
-  
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-
-        <Route
+          <Route
             path="/home"
             element={
               <SwitchRoute
@@ -34,13 +31,13 @@ function App() {
               />
             }
           />
-          <Route path="/" element={<ProtectedRoute elementIfAuthenticated={<Home />} isAuthenticated={isAuthenticated}/>}  />
-          <Route path="/createPost" element={<ProtectedRoute elementIfAuthenticated={<CreatePost />} isAuthenticated={isAuthenticated}/>}  />
+          <Route path="/" element={<ProtectedRoute elementIfAuthenticated={<Home />} isAuthenticated={isAuthenticated}/>} />
+          <Route path="/createPost" element={<ProtectedRoute elementIfAuthenticated={<CreatePost />} isAuthenticated={isAuthenticated}/>} />
           
-          <Route path="/register" element={<> <InitialNavbar /> <Register /> </>} />
-          <Route path="/login" element={ <> <InitialNavbar /> <Login /> </>} />
-          <Route path="/search" element={<> <MainNavbar /> <Searching /> </>} />
-          <Route path="/manageAccount" element={<> <MainNavbar /> <ManageAccount /> </>} />
+          <Route path="/register" element={<><InitialNavbar /><Register /></>} />
+          <Route path="/login" element={<><InitialNavbar /><Login /></>} />
+          <Route path="/search" element={<><MainNavbar /><Searching /></>} />
+          <Route path="/manageAccount" element={<><MainNavbar /><ManageAccount /></>} />
           
           <Route path="*" element={<Notfound />} />
         </Routes>
@@ -50,4 +47,3 @@ function App() {
 }
 
 export default App;
-
