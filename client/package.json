@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "echo 'No build needed for Node.js server'",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
